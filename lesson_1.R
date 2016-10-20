@@ -65,18 +65,90 @@ rownames(your.mat) <- c('1', '2', '3', '4', '5')
 your.mat
 
 #looking to remove columns by name
-your.mat[c('a', 'b')]
-toremove <- c('a', 'b')
-your.mat[!colnames(your.mat) %in% toremove ]
-rownames(your.mat)[1:2] -> remove
-remove
-your.mat[!rownames(your.mat) %in% remove ]
+# this one DESELECTS with -c
+subset(your.mat, select=-c(a,b))
+#this selects the cols I WANT - but column names must be in quotes!
+your.mat[ , c('a', 'b')]
+# this also selects for WANTED columns
+subset(your.mat, select=c(a,b))
+
 my.mat[0,]
 my.mat[-0,]
 my.mat[,-1:-2]
 my.mat[1:2,1:2]
 array(1:8, dim=c(2,2,2))
 array(1:8, dim=c(2,2,2))[,2,2]
+
+################################################
+################################################
+################################################
+a <- 9^2
+x <- c(100, 110, 120, 130)
+y <- c(200, 210, 220, 230)
+z <- c(300, 310, 320, 330)
+p <- matrix(1:16, nrow=4, ncol=4)
+d <- matrix(20:39, nrow=4, ncol=5) 
+q <- matrix(40:59, nrow=5, ncol=4)
+ZZ <- matrix(70:89, nrow=4, ncol=5)
+x
+y
+z
+
+p
+d
+q
+colnames(ZZ) <- c('A', 'B', 'C', 'D', 'E')
+rownames(ZZ) <- c('R1', 'R2', 'R3', 'R4')
+ZZ
+
+
+help(cat)
+# cat lets you mix objects and text: like python print "the value of x is {0}" .format(x)
+# can not replace cat with print in the examples below. Apparently, no mixing objects and text with print.
+cat("The value of variable a is ", a, "\n")
+cat("The mean of z is:", mean(z), "\n")
+
+help(cbind)
+# combines the vectors as columns, need matching row length
+# BEWARE combining different data types such as char and int 
+cbind(x, y, z)
+cbind(z, p)
+cbind(p, d)
+cbind(p, q) # FAILS, as expected: diff number rows
+
+#rbind
+# combines the vectors as rows, need matching column length
+rbind(x, y, z)
+rbind(p, d)  # FAILS, as expected b/c diff number cols
+rbind(p, q)
+
+# col, row
+# until I have to use this, I have no idea what the point is!
+help(col)
+col(ZZ, as.factor = TRUE)
+ZZ[row(ZZ) == col(ZZ) + 1]
+row(ZZ)
+
+# cut
+# This is frustrating. Give us a dataset and have us do things to it to learn commands. Commands on their own are meaningless!!!
+help(cut)
+# Nice youtube.com video of this: Take a heights column and cut it into intervals: A<=50, B=50-55, C=55-60, 
+# D=60-65, E=65-70,F=70+
+# you must set lower and upper bounds: 0, 100 in this case
+#default: left-open, right-closed. Meaning borders go to the left interval.
+#Thus, 60 will go into the 55-60 category.
+# Making a height out of bounds to see what happens: <NA>
+# right=FALSE (whether or not rt closed) added to end of CatHeight variable will make it right-open, left-closed. Now, 60 goes to 60-65 category
+#youtube.com     MarinStatsLectures
+Height <- c(62.1, 74.7, 69.7, 71.0, 56.9, 58.7, 63.3, 70.4, 70.5, 59.2, 50, 100, 101)
+CatHeight <- cut(Height, breaks=c(0, 50, 55, 60, 65, 70, 100), labels=c('A', 'B', 'C', 'D', 'E', 'F'))
+RtFalseCatHeight <- cut(Height, breaks=c(0, 50, 55, 60, 65, 70, 100), labels=c('A', 'B', 'C', 'D', 'E', 'F'), right=FALSE)
+Height
+CatHeight
+RtFalseCatHeight
+# Let R choose break pts. You choose the number of breaks you want.
+FourCatHeight <- cut(Height, breaks=4)
+FourCatHeight
 ################################################
 ## Bonus exercises #############################
 ################################################
