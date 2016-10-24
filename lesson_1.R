@@ -126,6 +126,7 @@ rbind(p, q)
 # until I have to use this, I have no idea what the point is!
 help(col)
 col(ZZ, as.factor = TRUE)
+col(ZZ)
 ZZ[row(ZZ) == col(ZZ) + 1]
 row(ZZ)
 
