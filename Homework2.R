@@ -27,7 +27,7 @@ for (i in 20:10){
 #### 3 ####
 #primer numbers: I can't do any better than this internet answer
 is.prime <- function(num) {
-  if (num == 2) {
+  if (num == 2 | num == 1) {
     TRUE
   } else if (any(num %% 2:(num-1) == 0)) {
     FALSE
@@ -36,6 +36,7 @@ is.prime <- function(num) {
   }
 }
 
+is.prime(1)
 #### 4 #####
 # Write a loop that prints out the numbers from 1 to 20, printing “Good: NUMBER” if the number is
 # divisible by five and “Job: NUMBER” if then number is prime, and nothing otherwise.
@@ -99,4 +100,54 @@ Gompert.curve(1, 20, 280, 100, 0.4)
 # You are beginning to suspect the biologist is taking advantage of you. Modify your function to plot in
 # purple any y value that’s above a and b. Hint: try putting 3==3 & 2==2 and 3==4 | 2==2 into an if
 # statement and see what you get. Using this construction may make this simpler.
+
+#### 9 ####
+
+# Write a function that draws boxes of a specified width and height that look like this (height 3, width 5):
+
+sillybox <- function(w,h){
+  #creating the lines to use (one with * width times and other with * at ends and blanks in middle)
+  line1 <- c(rep('*', w, '\n'))
+  BLANK <- c(rep(' ', w-2))
+  line2 <- c('*', BLANK, '*')
+  #print first line
+  cat(noquote(line1),"\n")
+  # now print the middle line h-2 times
+  for (i in 1:(h-2)){
+    cat(noquote(line2), "\n")
+  }
+  # print bottom line
+  cat(noquote(line1),"\n")
+}
+
+sillybox(5,3)
+
+#### 10 ####
+#Modify your box function to put text centred inside the box.
+
+#Copied the function from quest. 09 and modifying it:
+# Notes: text to be centered in width, and then centered height
+
+messagebox <- function(w,h, m){
+  # Have three possible lines: 
+  line1 <- c(rep('*', w, '\n'))
+  BLANK <- c(rep(' ', w-2))
+  line2 <- c('*', BLANK, '*')
+  if ((nchar(m) > w-2) | h < 3) {
+    print("Your box size is too small for your text! Try again.")
+  } else {
+    line3 <- c('*')
+    #print first line
+    cat(noquote(line1),"\n")
+    # now print the middle line h-2 times
+    for (i in 1:(h-2)){
+      cat(noquote(line2), "\n")
+  }
+  # print bottom line
+  cat(noquote(line1),"\n")
+  }
+}
+
+#messagebox(width, height, message)
+messagebox(2,2,"hello")
 
