@@ -17,17 +17,26 @@ for (i in 20:10){
 seq(20, 10, by=-2)
 
 i <- 20
-is.even <- function(x) x %% 2 == 0 
+
+is.even <- function(x){
+ x %% 2 == 0 }
+
 for (i in 20:10){
   if (is.even(i)){
     print(i)
   }
 }
 
+
 #### 3 ####
 #primer numbers: I can't do any better than this internet answer
+
+# if (any(num %% 2:(num-1) == 0))  EXPLAINED:
+# Looks any answer of 0 from range of number %% 2 to number %% (number-1).
+# ie. if num <- 5, it looks for any 0 answer from: 5 %% 2, 5 %% 3, 5 %% 4  
+
 is.prime <- function(num) {
-  if (num == 2 | num == 1) {
+  if (num == 2) {
     TRUE
   } else if (any(num %% 2:(num-1) == 0)) {
     FALSE
@@ -36,7 +45,9 @@ is.prime <- function(num) {
   }
 }
 
-is.prime(1)
+
+is.prime(2)
+
 #### 4 #####
 # Write a loop that prints out the numbers from 1 to 20, printing “Good: NUMBER” if the number is
 # divisible by five and “Job: NUMBER” if then number is prime, and nothing otherwise.
@@ -129,25 +140,45 @@ sillybox(5,3)
 # Notes: text to be centered in width, and then centered height
 
 messagebox <- function(w,h, m){
-  # Have three possible lines: 
+  # line1 is top and bottom of box: 
   line1 <- c(rep('*', w, '\n'))
+  #line2 is internal lines without message
   BLANK <- c(rep(' ', w-2))
   line2 <- c('*', BLANK, '*')
+  # Make sure box is large enough for the message
   if ((nchar(m) > w-2) | h < 3) {
     print("Your box size is too small for your text! Try again.")
   } else {
-    line3 <- c('*')
     #print first line
     cat(noquote(line1),"\n")
+    # width centering for message line: get number needed blanks
+    mblanks <- w - (nchar(m))
+    #determine how many blanks for left vs right side of message
+    # odd number spaces: offset message to left
+    leftb <- floor(mblanks/2)
+    leftblank <- c(rep(' ', leftb))
+    rightb <- ceiling(mblanks/2)
+    rightblank <- c(rep(' ', rightb))
+    # the message line
+    mline <- c('*', leftblank, m, rightblank, '*') 
     # now print the middle line h-2 times
-    for (i in 1:(h-2)){
+    toplines <- floor((h-3)/2)
+    bottomlines <- ceiling((h-3)/2)
+    for (i in 1:toplines){
       cat(noquote(line2), "\n")
-  }
+    }
+    cat(mline, '\n')
+    for (i in 1:bottomlines){
+      cat(noquote(line2), "\n")
+    }
   # print bottom line
   cat(noquote(line1),"\n")
   }
 }
 
+
 #messagebox(width, height, message)
-messagebox(2,2,"hello")
+messagebox(21,10,"cantankerous")
+
+
 
