@@ -180,5 +180,53 @@ messagebox <- function(w,h, m){
 #messagebox(width, height, message)
 messagebox(21,10,"cantankerous")
 
+#### 11 ####
+
+#### 12 ####
+# In ecology, hurdle models are often used to model the abundance of species found on surveys. They
+# first model the probability that a species will be present at a site (drawn, for example, from a Bernoulli
+# distribution) and then model the abundance for any species that is present (drawn, for example, from
+# the Poisson distribution). Write a function that simulates the abundance of a species at n sites given a
+# probability of presence (p) and that its abundance is drawn from a Poisson with a given λ. Hint: there is
+# no Bernoulli distribution in R, but the Bernoulli is a special case of what distribution?...                
+
+# NOTE: Would never have gotten this without Paul's explanation of what was wanted from the question.
+
+# rbinom(how many random #s to generate, #Bernoulli trials, probability of success)
+# rpois(how many random #s to generate, Lambda (λ) is the total number of events (k) divided by the number of units (n) in the data (λ = k/n))
+# So I need to just sample one population and see if the damned thing(=It) is there:
+# Then, if It exists, then simulate abundance of It (Think Stephen King; It has been seen in abundance lately)
+
+# user inputs p, n, and lambda
+get.abundance <- function(p, n, l){
+if (rbinom(1, 1, p) == 1){
+  return(rpois(n, l))
+}
+}
+#get.abundance(binom probability, number reps in poisson, poisson lambda)
+get.abundance(0.5, 1, 8)
+
+#### 13 ####
+# An ecologist really likes your hurdle function (will you never learn?). Write them a function that simulates
+# lots of species (each with their own p and λ) across n sites. Return the results in a matrix where each
+# species is a column, and each site a row (this is the standard used for ecology data in R).
 
 
+
+
+# To clean up the environment scrren:
+rm(list =ls())
+# To istall a package
+# install.packages('gg.plot2')
+# to load it for use:
+# require('gg.plot2')
+# for some help axamples
+# borwseVignettes(package = "grid")
+#to get to web page:
+# browseURL('http://cran.stat.ucla.edu/web/packages/available_packages_by_name.html')
+# check for updates
+# update.packages()
+
+#command ,
+# str(file.scv)
+# View(file.csv)
