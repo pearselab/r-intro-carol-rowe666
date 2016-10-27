@@ -150,6 +150,16 @@ RtFalseCatHeight
 # Let R choose break pts. You choose the number of breaks you want.
 FourCatHeight <- cut(Height, breaks=4)
 FourCatHeight
+
+#diff
+# differences = 2  is same as diff(diff(myvect)) so on and so forth for number of differences
+myvect <- c(2, 4, 6, 8, 10)
+sect <- c(100, 20, 200, 50)
+rev(sect)
+diff(myvect)
+diff(sect)
+diff(sect, differences = 2)
+diff(myvect, differences = 3) 
 ################################################
 ## Bonus exercises #############################
 ################################################
@@ -163,3 +173,7 @@ were all going direct to Heaven, we were all going direct the other
 way- in short, the period was so far like the present period, that
 some of its noiosiest authorities insisted on its being received, for
 good or for evil, in the superlative degree of comparison only."
+
+# all instances of "the" - assume you mean The THE the etc.
+help(grep)
+grep ('the', bonus.text, ignore.case = TRUE)

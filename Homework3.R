@@ -46,3 +46,6 @@ Barney <- new.cat(weight= 8, breed="alley cat", name="Barney")
 Felix <- new.cat(weight= 50, breed= 'jaguar', name="Felix")
 race(Tubby, Barney, Felix)
 
+#### 2 ####
+# Implement a point class that holds x and y information for a point in space.
+

@@ -94,6 +94,22 @@ Gompert.curve <- function(start, finish, a, b, c){
 
 Gompert.curve(1, 20, 280, 100, 0.4)
 
+#### Karen's answer:
+GompFun <- function (a,b,c,d) { # a,b,c, constants, d = max time
+  t <- 0
+  pop_vector <- 0
+  time_span <- c(1:d)
+  for (i in time_span) {
+    t <- c(t,i) # incrementing to make a vector
+    pop_size <- a*exp(-b*exp(-c*i)) # within-function variable
+    pop_vector <-  c(pop_vector, pop_size) # incrementing to make a vector
+  }
+  plot(t, pop_vector, type = "l")
+}
+GompFun(.22,6,.5,10)
+
+###### end of Karen's ######
+
 # Graph cars using blue points overlayed by a line 
 #plot(values, type="o", col="blue", xlab = 'Generation', ylab = 'Population Size')
 
@@ -200,20 +216,79 @@ messagebox(21,10,"cantankerous")
 # user inputs p, n, and lambda
 get.abundance <- function(p, n, l){
 if (rbinom(1, 1, p) == 1){
-  return(rpois(n, l))
+  abundance <- rpois(n,l)
+  return(abundance)
+  #return(rpois(n, l))
+}else{
+  print("Your species is not present")
 }
 }
 #get.abundance(binom probability, number reps in poisson, poisson lambda)
-get.abundance(0.5, 1, 8)
+get.abundance(0.1, 20, 2)
 
 #### 13 ####
 # An ecologist really likes your hurdle function (will you never learn?). Write them a function that simulates
 # lots of species (each with their own p and λ) across n sites. Return the results in a matrix where each
 # species is a column, and each site a row (this is the standard used for ecology data in R).
+ 
+
+### I am changing the question to making a dataframe. I use dataframes a lot and would rather learn to use them than a matrix in R
+### While we are at it, let's make it more realistic and import data from a csv file.
+
+### DataFrames in Python is SO MUCH EASIER.
+pathway <- '/Users/carolrowe/Dropbox/Carol\ folder/PearseCourse/'
+pathtofile <- paste(pathway, "speciesinput.csv", sep = '')
+
+speciesinput <- read.csv(pathtofile, header = TRUE, as.is = TRUE)
+#head(speciesinput,10) 
+
+#speciesinput2 <- speciesinput[c("Genus", 'species', 'p', 'reps', 'lambda')]
+#head(speciesinput2,10) 
+#mtcars[c("mpg", "hp")] 
+
+get.abundance <- function(p, lam){
+  if (rbinom(1, 1, p) == 1){
+    abundance <- rpois(1,lam)
+    return(abundance)
+    #return(rpois(n, lambda))
+  }else{
+    print("Your species is not present")
+    #lambda <- 0
+    return(0)
+  }
+}
+#get.abundance(0.5,50)
 
 
+# abundace.species <- data.frame()
+# repvector <- c()
+# namevector <- c()
+#row.names(speciesinput) <- NULL
+for(i in 1:nrow(speciesinput)) {
+  names(speciesinput) <- NULL
+  row <- speciesinput[i,]
+  #as.numeric(df[1,])
+  print(row)
+  Genus <- toString(row[1])
+  species <- toString(row[2])
+  p <- 0.5
+  print("p is")
+  cat(p)
+  reps <- row[4]
+  lam <- row[5]
+  print(lam)
+  replicates <- get.abundance(p, lam)
+  print(replicates)
+  #return(name, namevector)
+  # do stuff with row
+}
+
+as.data.frame(name, namevector)
+
+get.abundance('Pteridium', 'aquilinum', 0.5,   20,     50)
 
 
+### Just some learning notes: #####
 # To clean up the environment scrren:
 rm(list =ls())
 # To istall a package
