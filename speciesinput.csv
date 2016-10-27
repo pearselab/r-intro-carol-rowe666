@@ -1,0 +1,11 @@
+Genus,species,p,reps,lambda
+Pteridium,aquilinum,0.5,20,50
+Populus,tremuloides,0.8,15,100
+Ipomospsis,aggregata,0.2,12,44
+Thermus,aquaticus,0.1,13,900000
+Camellia,sinensis,0.7,15,79
+Coffea,arabica,0.4,19,66
+Daucus,carota,0.6,22,44
+Solanum,tuberosum,0.8,30,68
+Melanogrammus,aeglefinus,0.1,21,2
+Triticum,aestivum,0.8,12,300
