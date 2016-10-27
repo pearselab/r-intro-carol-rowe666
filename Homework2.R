@@ -236,7 +236,7 @@ get.abundance(0.1, 20, 2)
 ### While we are at it, let's make it more realistic and import data from a csv file.
 
 ### DataFrames in Python is SO MUCH EASIER.
-pathway <- '/Users/carolrowe/Dropbox/Carol\ folder/PearseCourse/'
+pathway <- '/Users/carolrowe/Dropbox/Carol\ folder/PearseCourse/r-intro-carol-rowe666'
 pathtofile <- paste(pathway, "speciesinput.csv", sep = '')
 
 speciesinput <- read.csv(pathtofile, header = TRUE, as.is = TRUE)
