@@ -327,18 +327,37 @@ lostplot <- plot(latitude, longitude, type = "l", xlab = "latutude", ylab = "lon
 # Too much time wasted. Python is so much easier!
 
 
-##### 15 #####
+##### 15 #########################
 # Professor Savitzky is deeply concerned to realise that the member of faculty was, in fact, at the top of
 # a steep mountain in the fog. Approximately 5 miles away, in all directions, from the faculty member’s
 # starting point is a deadly cliff! He asks if you could run your simulation to see how long, on average,
 # until the faculty member plummets to their doom.
 
-# MAKING A "CONVERSION" OF MY lostpoints (SEE Q14) TO 'ACTUAL' DISTANCE:
+# ASSUMING THAT THE CONVERSION FORM LAT/LONG TO DIST. IN MILES IS MADE......
+num.loops <- 100
+for (num in 1:num.loops){
+times <- c()
+# need to look for changes in latitude and logitude
+latitude <- 0
+longitude <- 0
+distmoved <- 0
+for (i in 1:100){
+  latitude <- latitude + rnorm(n = 1, mean = 0, sd = 1)
+  longitude <- longitude + rnorm(n= 1, mean = 0 , sd = 1)
+  distmoved <- sqrt(latitude^2 + longitude^2)
+  if (distmoved >= 5){
+    times <- c(times, i*5)
+    #print(i*5)
+    break
+  }
+}
+}
 
-# ? Likely the faculty member was perhaps booksmart and could track his/her changes in git hub. Unfortunaltly, common
-# sense didn't apply to tracking changes while doing fieldwork. Otherwise, he/she could find the route back down the cliff.
+theavg <- mean(times)
+cat("Given", num.loops, "replications. The average time to plummiting is", theavg, "minutes.")
 
 
+##### 16 #####################
 
 
 ### Just some learning notes: #####
