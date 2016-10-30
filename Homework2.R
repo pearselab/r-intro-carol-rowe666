@@ -300,26 +300,41 @@ print(outputmatrix)
 # process 100 times and plot it for him?
 
 # Don't put in n = 100. Rather, we want a random of 1. Look where faculty member is. Then randomly move again. Stop.
-# See where faculty member is. etc. for 100 times. 
-howmany <- 100
-lostpoints <- c(0)
+# See where faculty member is. etc. for 100 times.
+lost.prof <- function(n)
+# Do not need these start/time, but kept them anyway.
 start <- 0
 time <- c(0)
 # need to look for changes in latitude and logitude
-latchange <- c(0)
-longchange <- c(0)
-for (i in 1:howmany){
+latdude <- 0
+longdude <- 0
+latitude <- c(0)
+longitude <- c(0)
+for (i in 1:n){
+  #Don't need the start/time, but kept them in case needed in following questions
   start <- (start + 5)
-  latc <- rnorm(n = 1, mean = 0, sd = 1)
-  longc <- rnorm(n= 1, mean = 0 , sd = 1)
-  distmoved <- sqrt(latc^2 + longc^2)
-  lostpoints <- c(lostpoints, distmoved)
+  latdude <- latdude + rnorm(n = 1, mean = 0, sd = 1)
+  longdude <- longdude + rnorm(n= 1, mean = 0 , sd = 1)
+  latitude <- c(latitude, latdude)
+  longitude <- c(longitude, longdude)
+  #distmoved <- sqrt(latc^2 + longc^2)
+  #lostpoints <- c(lostpoints, distmoved)
   time <- c(time, start)
 }
 
-lostplot <- plot(time, lostpoints, type = "l", xlab = "time in minutes", ylab = "Where's Prof.?")
+lostplot <- plot(latitude, longitude, type = "l", xlab = "latutude", ylab = "longitude")
 
 ##### 15 #####
+# Professor Savitzky is deeply concerned to realise that the member of faculty was, in fact, at the top of
+# a steep mountain in the fog. Approximately 5 miles away, in all directions, from the faculty member’s
+# starting point is a deadly cliff! He asks if you could run your simulation to see how long, on average,
+# until the faculty member plummets to their doom.
+
+# MAKING A "CONVERSION" OF MY lostpoints (SEE Q14) TO 'ACTUAL' DISTANCE:
+
+# ? Likely the faculty member was perhaps booksmart and could track his/her changes in git hub. Unfortunaltly, common
+# sense didn't apply to tracking changes while doing fieldwork. Otherwise, he/she could find the route back down the cliff.
+
 
 
 
