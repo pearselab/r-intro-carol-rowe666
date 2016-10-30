@@ -8,7 +8,7 @@ while (x >= 10){
 }
 
 # Or, to avoud while loops
-i <- 20
+
 for (i in 20:10){
   print(i)
 }
@@ -298,7 +298,7 @@ print(outputmatrix)
 # Logan. He is modelling their progress through time in five minute intervals, assuming they cover a
 # random, Normally-distributed distance in latitude and longitude in each interval. Could you simulate this
 # process 100 times and plot it for him?
-
+ptm <- proc.time()
 # Don't put in n = 100. Rather, we want a random of 1. Look where faculty member is. Then randomly move again. Stop.
 # See where faculty member is. etc. for 100 times.
 numreps <- 100
@@ -322,7 +322,8 @@ for (i in 1:numreps){
   time <- c(time, start)
 }
 lostplot <- plot(latitude, longitude, type = "l", xlab = "latutude", ylab = "longitude")
-
+proc.time() - ptm
+print(proc.time())
 # Was going to make the above a function. R can NOT return two vectors, but you can return a list. Silly, frustrating R. But, then to get the elements from the list to make the plot...... 
 # Too much time wasted. Python is so much easier!
 
@@ -358,6 +359,121 @@ cat("Given", num.loops, "replications. The average time to plummiting is", theav
 
 
 ##### 16 #####################
+# Sadly, by the time you have completed your simulations the faculty member has perished. Professor
+# Savitzky is keen to ensure this will never happen again, and so has suggested each faculty member
+# be attached, via rubber band, to a pole at the centre of the site whenever conducting fieldwork 3. He
+# assures you that you can model this by assuming that the faculty member, at each time-step, moves α×
+# distance-from-pole latitudinally and longitudinally (in addition to the rate of movement you’ve already
+#  simulated) each time-step. Simulate this, and see how strong the rubber band (α) must be to keep the
+# faculty member safe for at least a day.
+
+# WE ARE LOOKING FOR FRICTION(resistance?) NEEDED TO PREVENT PROFS FROM PLUMMETING (wouldn't mass of prof. be a factor?) I'm clueless.
+
+# We are working in 5 min. increments and need to survive at least a day.
+# Caluculate the number of intervals to increment over per day:
+daymins <- 24*60
+intervals <- daymins/5
+
+# Get 0 starting values of lat, long, and dist.
+latitude <- 0
+longitude <- 0
+distmoved <- 0
+
+# Need a vecotr of distances moved. So start with empty vector.
+distance <- c()
+
+# Loop through the 288 5min. intervals for the day. Collect the distances moved in a vector. 
+for (i in 1:intervals){
+  latitude <- latitude + rnorm(n = 1, mean = 0, sd = 1)
+  longitude <- longitude + rnorm(n= 1, mean = 0 , sd = 1)
+  distmoved <- sqrt(latitude^2 + longitude^2)
+  distance <- c(distance, distmoved)
+}
+
+# Can't go beyond 5 miles or we're off the cliff. Where distance is >= 5,
+# get how much too far we went....i.e. how much force do we need to keep us
+# from going off the cliff
+pullback <- c()
+for (i in 1:length(distance)){
+  if (distance[i] >= 5 ){
+    pull <- distance[i] - 5
+    pullback <- c(pullback, pull)
+  }
+}
+
+# Take the average from the forces needed to keep prof. from going off cliff.
+sumpull <- sum(pullback)
+print(sumpull)
+avgpullback <- sumpull/intervals
+print(avgpullback)
+cat("For this prof., you'd need a rubberband with at least", avgpullback, "miles per 5 min. interval of force to hold him/her from the perils of the cliff.")
+
+##### 17 ####################
+
+
+#### BONUS: NUMERIC #######
+
+# Ugh. Why didn't you say this in the first place?! Now, I've reinforced something wrong. 
+# Going back to try and unbreak a bad habit.
+
+# loop.length <- 50000
+# t <- numeric(loop.length) # (!)
+# for(i in seq_len(loop.length))
+#   t[i] <- 10
+#...very fast!...
+
+# Here's a start from Q5 and Q6:
+Gompertz.point <- function(t, a, b, c){
+  z <- a*exp(-b*exp(-c*t))
+  return(z)
+}
+
+#Gompertz.point(194, 20, 33, 22)
+
+Gompert.curve <- function(start, finish, a, b, c){
+  size <- length(start:finish)
+  output <- numeric(size)
+  for (i in start:finish){
+    to_add <- Gompertz.point(i, a, b, c)
+    output <- c(output, to_add)
+  }
+  plotty <- plot(output, type="o", col= ifelse(output > a,'blue', ifelse(output > b, 'red', 'black')), xlab = 'Generation', ylab = 'Population Size')
+  return(list(plotty, output))
+}
+
+Gompert.curve(1, 20, 280, 100, 0.4)
+
+### Here's another change from #14: (also timing it with proc.time())
+ptm <- proc.time()
+
+numreps <- 100
+# Do not need these start/time, but kept them anyway.
+start <- 0
+time <- numeric(numreps)
+# need to look for changes in latitude and logitude
+latdude <- 0
+longdude <- 0
+latitude <- numeric(numreps)
+longitude <- numeric(numreps)
+for (i in 1:numreps){
+  #Don't need the start/time, but kept them in case needed in following questions
+  start <- (start + 5)
+  latdude <- latdude + rnorm(n = 1, mean = 0, sd = 1)
+  longdude <- longdude + rnorm(n= 1, mean = 0 , sd = 1)
+  latitude <- c(latitude, latdude)
+  longitude <- c(longitude, longdude)
+  #distmoved <- sqrt(latc^2 + longc^2)
+  #lostpoints <- c(lostpoints, distmoved)
+  time <- c(time, start)
+}
+lostplot <- plot(latitude, longitude, type = "l", xlab = "latutude", ylab = "longitude")
+proc.time() - ptm
+print(proc.time())
+
+
+
+
+
 
 
 ### Just some learning notes: #####
