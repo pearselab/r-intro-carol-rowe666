@@ -301,7 +301,7 @@ print(outputmatrix)
 
 # Don't put in n = 100. Rather, we want a random of 1. Look where faculty member is. Then randomly move again. Stop.
 # See where faculty member is. etc. for 100 times.
-lost.prof <- function(n)
+numreps <- 100
 # Do not need these start/time, but kept them anyway.
 start <- 0
 time <- c(0)
@@ -310,7 +310,7 @@ latdude <- 0
 longdude <- 0
 latitude <- c(0)
 longitude <- c(0)
-for (i in 1:n){
+for (i in 1:numreps){
   #Don't need the start/time, but kept them in case needed in following questions
   start <- (start + 5)
   latdude <- latdude + rnorm(n = 1, mean = 0, sd = 1)
@@ -321,8 +321,11 @@ for (i in 1:n){
   #lostpoints <- c(lostpoints, distmoved)
   time <- c(time, start)
 }
-
 lostplot <- plot(latitude, longitude, type = "l", xlab = "latutude", ylab = "longitude")
+
+# Was going to make the above a function. R can NOT return two vectors, but you can return a list. Silly, frustrating R. But, then to get the elements from the list to make the plot...... 
+# Too much time wasted. Python is so much easier!
+
 
 ##### 15 #####
 # Professor Savitzky is deeply concerned to realise that the member of faculty was, in fact, at the top of
