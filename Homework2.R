@@ -149,6 +149,8 @@ sillybox <- function(w,h){
 
 sillybox(5,3)
 
+
+
 #### 10 ####
 #Modify your box function to put text centred inside the box.
 
@@ -221,71 +223,82 @@ if (rbinom(1, 1, p) == 1){
   #return(rpois(n, l))
 }else{
   print("Your species is not present")
+  return(0)
 }
 }
 #get.abundance(binom probability, number reps in poisson, poisson lambda)
 get.abundance(0.1, 20, 2)
 
-#### 13 ####
+#### 13 ##############################################
 # An ecologist really likes your hurdle function (will you never learn?). Write them a function that simulates
 # lots of species (each with their own p and λ) across n sites. Return the results in a matrix where each
 # species is a column, and each site a row (this is the standard used for ecology data in R).
  
 
-### I am changing the question to making a dataframe. I use dataframes a lot and would rather learn to use them than a matrix in R
-### While we are at it, let's make it more realistic and import data from a csv file.
+### I am importing the input data from a csv file.
 
-### DataFrames in Python is SO MUCH EASIER.
-pathway <- '/Users/carolrowe/Dropbox/Carol\ folder/PearseCourse/r-intro-carol-rowe666'
+pathway <- '/Users/carolrowe/Dropbox/Carol\ folder/PearseCourse/r-intro-carol-rowe666/'
 pathtofile <- paste(pathway, "speciesinput.csv", sep = '')
 
 speciesinput <- read.csv(pathtofile, header = TRUE, as.is = TRUE)
-#head(speciesinput,10) 
+head(speciesinput,10) 
 
-#speciesinput2 <- speciesinput[c("Genus", 'species', 'p', 'reps', 'lambda')]
-#head(speciesinput2,10) 
-#mtcars[c("mpg", "hp")] 
-
-get.abundance <- function(p, lam){
+get.abundance <- function(name, p, reps, lam){
   if (rbinom(1, 1, p) == 1){
-    abundance <- rpois(1,lam)
-    return(abundance)
-    #return(rpois(n, lambda))
+    abundance <- rpois(reps,lam)
+    info <- c(name, abundance)
+    return(info)
   }else{
     print("Your species is not present")
     #lambda <- 0
-    return(0)
+    nothere <- c(name, 0)
+    return(nothere)
   }
 }
-#get.abundance(0.5,50)
 
+#get.abundance('Pteridium aquilinum', 0.5,   20,     50)
+# Get dimensions from input dataframe for making a matrix: columns = # species, rows = max # reps
+coldimension <- nrow(speciesinput)
+rowdimension <- max(speciesinput$reps +1, na.rm = TRUE)
+#create a matrix for the largest possible needed; fill with 0
+outputmatrix <- matrix(data = 0, nrow = rowdimension, ncol = coldimension)
 
-# abundace.species <- data.frame()
-# repvector <- c()
-# namevector <- c()
-#row.names(speciesinput) <- NULL
 for(i in 1:nrow(speciesinput)) {
-  names(speciesinput) <- NULL
-  row <- speciesinput[i,]
-  #as.numeric(df[1,])
-  print(row)
-  Genus <- toString(row[1])
-  species <- toString(row[2])
-  p <- 0.5
-  print("p is")
-  cat(p)
-  reps <- row[4]
-  lam <- row[5]
-  print(lam)
-  replicates <- get.abundance(p, lam)
-  print(replicates)
-  #return(name, namevector)
-  # do stuff with row
+  #names(speciesinput) <- NULL
+  # create a single name by merging (paste) the Genus and species
+  Genus <- speciesinput[i,"Genus"]
+  species <- speciesinput[i,"species"]
+  name <- paste(Genus, species, sep = " ")
+  #print(name)
+  # get needed values from csv file and assign the values to variable names
+  p <- speciesinput[i, "p"]
+  reps <- speciesinput[i, "reps"]
+  lam <- speciesinput[i, 'lambda']
+  # Run through function to get the abundances and put result as a vector
+  replicates <- c(get.abundance(name, p, reps, lam))
+  #print(replicates)
+  # Append to the matrix by replacing the values at the exact indeces; 0 remain as place-holders
+  outputmatrix[1:length(replicates),i] <- replicates
 }
 
-as.data.frame(name, namevector)
+# IS IT BETTER TO HAVE 0 AS A PLACEHOLDER, OR 'NA' ?
+# UGH! Tried to rename the columns as row1, then you'd have to remove row1. Then, you could put the 
+# values back to integers instead of characters!!!
+# Why would anyone work in vectors vs dataframes??????
 
-get.abundance('Pteridium', 'aquilinum', 0.5,   20,     50)
+#colnames(outputmatrix) <- c(ouputmatrix[1,])
+print(outputmatrix)
+#print("next")
+#print(outputmatrix[1,])
+
+
+
+
+
+
+
+
+
 
 
 ### Just some learning notes: #####
