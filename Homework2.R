@@ -284,7 +284,7 @@ for(i in 1:nrow(speciesinput)) {
 # IS IT BETTER TO HAVE 0 AS A PLACEHOLDER, OR 'NA' ?
 # UGH! Tried to rename the columns as row1, then you'd have to remove row1. Then, you could put the 
 # values back to integers instead of characters!!!
-# Why would anyone work in vectors vs dataframes??????
+# Why would anyone work in matrices vs dataframes??????
 
 #colnames(outputmatrix) <- c(ouputmatrix[1,])
 print(outputmatrix)
@@ -292,12 +292,34 @@ print(outputmatrix)
 #print(outputmatrix[1,])
 
 
+#### 14 ######################
+# Professor Savitzky approaches you with a delicate problem. A member of faculty became disoriented
+# during fieldwork, and is now believed to be randomly wandering somewhere in the desert surrounding
+# Logan. He is modelling their progress through time in five minute intervals, assuming they cover a
+# random, Normally-distributed distance in latitude and longitude in each interval. Could you simulate this
+# process 100 times and plot it for him?
 
+# Don't put in n = 100. Rather, we want a random of 1. Look where faculty member is. Then randomly move again. Stop.
+# See where faculty member is. etc. for 100 times. 
+howmany <- 100
+lostpoints <- c(0)
+start <- 0
+time <- c(0)
+# need to look for changes in latitude and logitude
+latchange <- c(0)
+longchange <- c(0)
+for (i in 1:howmany){
+  start <- (start + 5)
+  latc <- rnorm(n = 1, mean = 0, sd = 1)
+  longc <- rnorm(n= 1, mean = 0 , sd = 1)
+  distmoved <- sqrt(latc^2 + longc^2)
+  lostpoints <- c(lostpoints, distmoved)
+  time <- c(time, start)
+}
 
+lostplot <- plot(time, lostpoints, type = "l", xlab = "time in minutes", ylab = "Where's Prof.?")
 
-
-
-
+##### 15 #####
 
 
 
