@@ -286,10 +286,16 @@ for(i in 1:nrow(speciesinput)) {
 # values back to integers instead of characters!!!
 # Why would anyone work in matrices vs dataframes??????
 
-#colnames(outputmatrix) <- c(ouputmatrix[1,])
+# Get a vecotr of the names:
+namehead <- as.vector(outputmatrix[1,])
+# Add head to matrix with the new names
+colnames(outputmatrix) <- c(namehead)
+# remove row1 which is the names repeated
+outputmatrix <- outputmatrix[-c(1), ]
+# Now make the values in the matrix as integers
+mode(outputmatrix) <- "integer"
+# Hooray!
 print(outputmatrix)
-#print("next")
-#print(outputmatrix[1,])
 
 
 #### 14 ######################
@@ -471,7 +477,23 @@ proc.time() - ptm
 print(proc.time())
 
 
+####### Bonus: Debugging ###########
 
+bad.sum <- function(x){
+  output <- 0
+  for(each in x){
+    if(is.character(each))
+      browser()
+    output <- output + each
+  }
+  return(output)
+}
+bad.sum(1:5) # all is well
+bad.sum(c(1,3,5,"this.will.crash"))
+
+
+# Well, that seems silly. Python lets you know what line the error is on. R, you have to fish for it?
+# Place browser() in various locations to find your error. Oh my. May be quicker in R to do some print statements throughout your code to find the error.
 
 
 
