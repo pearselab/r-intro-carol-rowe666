@@ -1,5 +1,4 @@
 #### 1 ####
-# I don't get it. Why not just have a database? This looks like info for a database. Databases are easy to manipulate!!
 
 # Implement a cat class, complete with race and print methods.
 tubby <- list(length=15, weigth=12, breed='barn cat', colour='black')

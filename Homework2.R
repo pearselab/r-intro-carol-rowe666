@@ -237,7 +237,7 @@ get.abundance(0.1, 20, 2)
 
 ### I am importing the input data from a csv file.
 
-pathway <- '/Users/carolrowe/Dropbox/Carol\ folder/PearseCourse/r-intro-carol-rowe666/'
+pathway <- '/make/your/own/pathway/but/do/not/share/'
 pathtofile <- paste(pathway, "speciesinput.csv", sep = '')
 
 speciesinput <- read.csv(pathtofile, header = TRUE, as.is = TRUE)
@@ -470,8 +470,9 @@ for (i in 1:numreps){
   longitude <- c(longitude, longdude)
   #distmoved <- sqrt(latc^2 + longc^2)
   #lostpoints <- c(lostpoints, distmoved)
-  time <- c(time, start)
+  time[i] <- start
 }
+cat("Here's the times", time)
 lostplot <- plot(latitude, longitude, type = "l", xlab = "latutude", ylab = "longitude")
 proc.time() - ptm
 print(proc.time())
@@ -500,7 +501,8 @@ bad.sum(c(1,3,5,"this.will.crash"))
 
 ### Just some learning notes: #####
 # To clean up the environment scrren:
-rm(list =ls())
+#rm(list =ls()) : just hit the paintbrush icon
+
 # To istall a package
 # install.packages('gg.plot2')
 # to load it for use:
