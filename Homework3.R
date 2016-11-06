@@ -26,7 +26,7 @@ new.cat <- function(weight, breed, name){
 
 # class method: function that just uses a class
 race <- function(first, second, third){
-  # checking to see if these are classes of object dog: is first is of class dog and is second of class dog
+  # checking to see if these are classes of object cat: is first is of class cat and is second of class cat
   if(!inherits(first, "cat") | !inherits(second, "cat") |!inherits(third, 'cat')){
     # stop just stops it so you can raise an error
     stop("You haven’t given me three felines!")

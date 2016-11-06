@@ -1,3 +1,7 @@
+###
+#  https://cran.r-project.org/doc/contrib/Short-refcard.pdf
+
+
 ## Some stuff to play with ##
 x <- c(1, 2, 3, 4)
 y <- c(5, 6, 7, 8)
@@ -191,7 +195,109 @@ sapply(list(phrase1, phrase2, phrase3), FUN = identical, phrase1)
 
 ##### IMAGE ########
 
+# To display a color image
+#image(x, ...)
+## Default S3 method:
+# image(x, y, z, zlim, xlim, ylim, col = heat.colors(12),
+#     add = FALSE, xaxs = "i", yaxs = "i", xlab, ylab,
+#     breaks, oldstyle = FALSE, useRaster, ...)
+p <- matrix(1:16, nrow=4, ncol=4)
 
+#myImagePlot(m, xlabels, ylabels, zlim, title=c("my title"))
+x=c(3,1,2,1,5,6,8)
+
+#image(5,1:length(x), matrix(x, nrow=1, ncol=length(x)), col=c("blue","red","green","yellow", "magenta", "grey"))
+image(matrix(p), col=c("blue","red","green","yellow", "magenta", "grey"), xlab = "x", ylab = 'y')
+#?image
+p
+# No, I can not figure this one out either!!!!!
+install.packages("pheatmap")
+library(pheatmap)
+
+# Create a 10x10 matrix of random numbers
+m = matrix(runif(100), 10, 10)
+m
+n = matrix(runif(100, 1, 5), 10, 10)
+n
+# The runif() function can be used to simulate n independent uniform random variables. 
+# For example, we can generate 5 uniform random numbers on [1.2,5.8]
+# runif(5, 1.2, 5.8)
+# http://www.stats.uwo.ca/faculty/braun/RTricks/basics/BasicRIII.pdf
+
+
+
+
+# Save output to jpeg
+#jpeg("heatmap.jpg")
+
+hotn <- pheatmap(p, cluster_row = FALSE, cluster_col = FALSE, color=gray.colors(2,start=1,end=0))
+hotn
+# SAVING PLOTS IN R
+# http://statistics.berkeley.edu/computing/saving-plots-r
+# dev.off()
+# When you're done with your plotting commands, enter the dev.off() command. This is very important - without it you'll get a partial plot or nothing at all. So, this is in reference to the jpeg("heatmap.jpg") above.
+
+#source("http://bioconductor.org/biocLite.R")
+#biocLite(c("RColorBrewer", "pheatmap"))
+
+
+#####  LS   ###############
+#what does rm(list=ls()) do?
+# ls() #list the R objects in the current workspace; all the values in current memmory
+# rm(x) #remove x from the workspace
+# rm(list=ls()) #remove all the variables from the workspace
+
+ls()
+rm(list =ls())
+
+#########  WHICH  ##########
+# endmemo rules!
+# http://www.endmemo.com/program/R/which.php
+p <- matrix(1:16, nrow=4, ncol=4)
+colnames(p) <- c('C1', 'C2', 'C3', 'C4')
+rownames(p) <- c('R1', 'R2', 'R3', 'R4')
+p
+which(p$C4 == 16) # fails
+which(p[,4] == 16)
+which(p[,'C4'] == 16)
+newmatrix = as.data.frame(p)
+newmatrix
+which(newmatrix$C4 == 16) # works
+
+which.max(p)
+which.min(p)
+
+
+#####  TABLE #######
+# takes a subset of a dataframe and makes it into a table
+table(newmatrix$C5)
+table(newmatrix$C5 < 30)
+table(newmatrix$C5 < 30, useNA = "always")
+table(newmatrix$C4 > 13)
+table(newmatrix$C5 < 30, newmatrix$C4 > 13, useNA = "always") # easier to see than say
+
+######   WITH  ##########
+#  http://www.endmemo.com/program/R/with.php
+#  with(BOD,{BOD$demand <- BOD$demand + 1; print(BOD$demand)})
+with(newmatrix, {newmatrix$C5 <- newmatrix$C4 *2; print(newmatrix$C5)})
+
+# within(BOD,{BOD$demand <- BOD$demand + 1; print(BOD$demand)})
+within(newmatrix, {newmatrix$C5 <- newmatrix$C4 *2; print(newmatrix$C5)})
+nextmatrix <- within(newmatrix, {newmatrix$C5 <- newmatrix$C4 *2})
+newmatrix <- nextmatrix[ , -c(1:4) ]
+newmatrix
+
+new.list <- list(2, 3, 4, 5, 6, 7)
+with(new.list, {new.list <- new.list *2}) # don't know how to use with and lists
+class(new.list)
+as.integer(new.list)
+class(new.list)
+new.list[[1]] + 1
+new.list[1:6]
+grief <-  within(new.list, {new.list <- lapply(new.list, "*", 3)}) # What's the point???
+print(grief)
+new.list[[1]]
+lapply(new.list, "*", 3) 
 
 
 ################################################
